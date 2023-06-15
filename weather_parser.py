@@ -1,7 +1,7 @@
 import requests
+import schedule
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-import schedule
 import time
 import os
 import django
@@ -57,7 +57,7 @@ class WeatherParser:
                     return WeatherData(date, temperature, description)
 
         except requests.exceptions.RequestException as e:
-            print(f"Виникла помилка при запиті: {e}")
+            print(f"An error occurred during the request.: {e}")
 
         return None
 
@@ -74,13 +74,13 @@ class WeatherSaver:
 
 
 def update_task_status(status):
-    print(f"Статус парсера: {status}")
+    print(f"Parser status: {status}")
 
 
 def parse_weather_for_date(base_url, date):
     update_task_status(TaskStatus.IN_PROGRESS)
 
-    print(f"Парсинг погоди для дати: {date}")
+    print(f"Parsing weather for a specific date: {date}")
 
     parser = WeatherParser(base_url, HEADERS)
     saver = WeatherSaver()
@@ -90,7 +90,7 @@ def parse_weather_for_date(base_url, date):
         saver.save_weather(weather_data.date, weather_data.temperature,
                            weather_data.description)
 
-    print(f"Завершено парсинг погоди для дати: {date}")
+    print(f"Weather parsing for the specified date is complete: {date}")
     update_task_status(TaskStatus.DONE)
     print()
 
