@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from weather_app.models import Weather
+
+admin.site.register(Weather)
