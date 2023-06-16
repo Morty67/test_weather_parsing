@@ -3,7 +3,7 @@ An application that parses data from the website https://pogoda.meta.ua/en/Kyivs
 
 ## Installing / Getting started:
 ```shell
-To get started, you need to clone the repository from GitHub: https://github.com/Morty67/test_weather_parsing/tree/develop
+To get started, you need to clone the repository from GitHub: https://github.com/Morty67/test_weather_parsing
 Python 3 must be installed
 
 python -m venv venv
@@ -17,6 +17,7 @@ POSTGRES_DB=<POSTGRES_DB>
 POSTGRES_USER=<POSTGRES_USER>
 POSTGRES_PASSWORD=<POSTGRES_PASSWORD>
 POSTGRES_HOST=<POSTGRES_HOST>
+SECRET_KEY=YOUR DJANGO SECRET KEY
 
 python manage.py migrate
 python manage.py runserver
@@ -30,6 +31,10 @@ Docker must be installed
 
 Domain:
 *  localhost:8000 or 127.0.0.1:8000
+* http://localhost:8000/api/weather/<date:date>/ (date in format like 16.06.2023)
+* http://localhost:8000/api/weather/run/ (Run the parser through the endpoint)
+* http://localhost:8000/api/parser-settings/ (Update-set parser startup time)
+* http://localhost:8000/api/doc/swagger/ (API docs)
 
 
 ## Features:
