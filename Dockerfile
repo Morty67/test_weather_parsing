@@ -12,8 +12,3 @@ COPY . /code/
 
 # Setting the environment variable DJANGO_SETTINGS_MODULE.
 ENV DJANGO_SETTINGS_MODULE=weather_parsing.settings
-#
-## Running Django migrations and server.
-#RUN python manage.py migrate
-#
-#ENTRYPOINT python manage.py runserver 0.0.0.0:8000 & python weather_parser.py
