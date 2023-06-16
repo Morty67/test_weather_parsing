@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from weather_parser import run_parser
-from .models import Weather
-from .serializers import WeatherSerializer
+from .models import Weather, ParserTimeSettings
+from .serializers import WeatherSerializer, ParserTimeSettingsSerializer
 
 
 class WeatherView(generics.RetrieveAPIView):
@@ -27,6 +27,8 @@ class WeatherView(generics.RetrieveAPIView):
 
 
 class WeatherRunView(APIView):
+    """ It is used to trigger the execution of the run_parser function,
+    which updates the weather information."""
     def post(self, request, format=None):
         run_parser()
         return Response(
@@ -35,3 +37,18 @@ class WeatherRunView(APIView):
                 "message": "Weather information " "updated.",
             }
         )
+
+
+class ParserTimeSettingsView(generics.CreateAPIView):
+    """ It is used to update the time when the parser should be run."""
+    queryset = ParserTimeSettings.objects.all()
+    serializer_class = ParserTimeSettingsSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        # Run the parser with the new time
+        run_parser()
+        return Response(serializer.data, status=status.HTTP_200_OK)
