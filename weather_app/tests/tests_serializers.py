@@ -3,8 +3,11 @@ from datetime import date
 
 from rest_framework.exceptions import ValidationError
 
-from weather_app.models import Weather
-from weather_app.serializers import WeatherSerializer
+from weather_app.models import Weather, ParserTimeSettings
+from weather_app.serializers import (
+    WeatherSerializer,
+    ParserTimeSettingsSerializer,
+)
 
 
 class WeatherSerializerTestCase(TestCase):
@@ -72,3 +75,25 @@ class WeatherSerializerTestCase(TestCase):
         # Expecting a ValidationError exception during invalid deserialization.
         with self.assertRaises(ValidationError):
             serializer.is_valid(raise_exception=True)
+
+
+class ParserTimeSettingsSerializerTestCase(TestCase):
+    def setUp(self):
+        self.parser_time = "12:00"
+        self.parser_time_settings = ParserTimeSettings.objects.create(
+            parser_time=self.parser_time
+        )
+        self.serializer = ParserTimeSettingsSerializer(
+            instance=self.parser_time_settings
+        )
+
+    def test_serializer_contains_expected_fields(self):
+        # Checks that the serializer contains the expected fields
+        data = self.serializer.data
+        self.assertEqual(set(data.keys()), set(["parser_time"]))
+
+    def test_serializer_data_matches_instance(self):
+        # Checks whether the data returned by the serializer corresponds to
+        # the model instance
+        data = self.serializer.data
+        self.assertEqual(data["parser_time"], self.parser_time)

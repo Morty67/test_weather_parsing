@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.exceptions import ValidationError
 
-from weather_app.models import Weather
+from weather_app.models import Weather, ParserTimeSettings
 
 
 class WeatherTestCase(TestCase):
@@ -59,3 +59,30 @@ class WeatherTestCase(TestCase):
         self.assertEqual(new_weather.weather_description, description)
         self.assertEqual(new_weather.date, date)
         self.assertIsNotNone(new_weather.id)
+
+
+class ParserTimeSettingsTestCase(TestCase):
+    def test_parser_time_creation(self):
+        # Tests the creation of the ParserTimeSettings object and checks
+        # that the correct time value is stored
+        parser_time = "12:00"
+        parser_time_settings = ParserTimeSettings.objects.create(
+            parser_time=parser_time
+        )
+        self.assertEqual(parser_time_settings.parser_time, parser_time)
+
+    def test_parser_time_update(self):
+        # Tests updating the time value in the ParserTimeSettings object
+        parser_time = "10:00"
+        new_parser_time = "12:00"
+        parser_time_settings = ParserTimeSettings.objects.create(
+            parser_time=parser_time
+        )
+        parser_time_settings.parser_time = new_parser_time
+        parser_time_settings.save()
+        updated_parser_time_settings = ParserTimeSettings.objects.get(
+            pk=parser_time_settings.pk
+        )
+        self.assertEqual(
+            updated_parser_time_settings.parser_time, new_parser_time
+        )
