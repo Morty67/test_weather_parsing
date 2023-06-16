@@ -12,6 +12,12 @@ source venv/bin/activate (on macOS)
 
 pip install -r requirements.txt
 
+Your settings for DB in .env file:
+POSTGRES_DB=<POSTGRES_DB>
+POSTGRES_USER=<POSTGRES_USER>
+POSTGRES_PASSWORD=<POSTGRES_PASSWORD>
+POSTGRES_HOST=<POSTGRES_HOST>
+
 python manage.py migrate
 python manage.py runserver
 ```
