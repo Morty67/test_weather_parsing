@@ -17,12 +17,13 @@ POSTGRES_DB=<POSTGRES_DB>
 POSTGRES_USER=<POSTGRES_USER>
 POSTGRES_PASSWORD=<POSTGRES_PASSWORD>
 POSTGRES_HOST=<POSTGRES_HOST>
+<SECRET_KEY>
 SECRET_KEY=YOUR DJANGO SECRET KEY
 
 python manage.py migrate
 python manage.py runserver
 ```
-## Run Docker
+## Run Docker 🐳
 Docker must be installed 
 ```shell
 *  docker-compose up --build
@@ -33,8 +34,10 @@ Domain:
 *  localhost:8000 or 127.0.0.1:8000
 * http://localhost:8000/api/weather/<date:date>/ (date in format like 16.06.2023)
 * http://localhost:8000/api/weather/run/ (Run the parser through the endpoint)
-* http://localhost:8000/api/parser-settings/ (Update-set parser startup time)
-* http://localhost:8000/api/doc/swagger/ (API docs)
+* http://localhost:8000/api/parser-settings/ (Update-set parser startup time, format {
+  "parser_time": "18:30"
+})
+
 
 
 ## Features:
