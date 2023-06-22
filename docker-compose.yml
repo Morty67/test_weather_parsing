@@ -20,6 +20,6 @@ services:
   db:
     image: postgres:14-alpine
     ports:
-      - "5433:5432"
+      - "5555:5555"
     env_file:
       - .env
